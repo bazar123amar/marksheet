@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body class="bg-blue-100 p-8">
+
+<h1 class="text-3xl font-bold mb-5">
+
+Student List
+
+</h1>
+
+<table class="w-full bg-white rounded shadow">
+
+<tr class="bg-blue-700 text-white">
+
+<th class="p-3">Roll</th>
+<th class="p-3">Name</th>
+<th class="p-3">Class</th>
+<th class="p-3">Rank</th>
+<th class="p-3">Action</th>
+
+</tr>
+
+{% for student in students %}
+
+<tr class="border text-center">
+
+<td class="p-3">
+{{student.roll}}
+</td>
+
+<td class="p-3">
+{{student.name}}
+</td>
+
+<td class="p-3">
+{{student.class_name}}
+</td>
+
+<td class="p-3">
+{{student.rank}}
+</td>
+
+<td class="p-3">
+
+<a href="{% url 'student_report' student.roll %}"
+
+class="bg-green-600 text-white px-4 py-2 rounded">
+
+View Report Card
+
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<a
+href="{% url 'download_all_reports' %}"
+
+class="bg-purple-700 text-white px-5 py-3 rounded">
+
+Download All Reports
+
+</a>
+
+</body>
+</html>

@@ -1,0 +1,340 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AR RAHAMAN ISLAMIC PUBLIC SCHOOL</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body class="bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 p-8">
+
+<div class="max-w-6xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden border-8 border-blue-900">
+
+<!-- Header -->
+
+<div class="bg-gradient-to-r from-blue-900 via-blue-600 to-cyan-500 text-white p-6">
+
+<div class="flex justify-between items-center">
+
+<div>
+
+<img src="{% static 'src/AR.jpeg' %}"
+class="w-28 h-28 bg-white rounded-full p-2"
+alt="School Logo">
+
+</div>
+
+<div class="text-center flex-1">
+
+<h1 class="text-4xl font-bold uppercase">
+AR RAHAMAN ISLAMIC PUBLIC SCHOOL
+</h1>
+
+<p class="text-lg">
+ESTD - 2021
+</p>
+
+<div class="mt-3 inline-block bg-red-500 px-5 py-2 rounded-full">
+
+<h2 class="font-bold text-xl">
+📘 {{ student.exam }} REPORT CARD
+</h2>
+
+</div>
+
+</div>
+
+<div class="w-32 h-36 bg-white rounded-lg overflow-hidden">
+
+{% if student.photo %}
+<img src="{{ student.photo.url }}"
+class="w-full h-full object-cover">
+{% else %}
+<div class="h-full flex items-center justify-center text-gray-400">
+Student Photo
+</div>
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Student Information -->
+
+<div class="p-6">
+
+<div class="grid grid-cols-2 gap-6">
+
+<div class="space-y-3">
+
+<p class="bg-blue-50 p-2 rounded">
+<b>Student Name:</b>
+{{ student.name }}
+</p>
+
+<p class="bg-blue-50 p-2 rounded">
+<b>Roll:</b>
+{{ student.roll }}
+</p>
+
+<p class="bg-blue-50 p-2 rounded">
+<b>Class:</b>
+{{ student.class_name }}
+</p>
+
+<p class="bg-blue-50 p-2 rounded">
+<b>Section:</b>
+{{ student.section }}
+</p>
+
+</div>
+
+<div class="space-y-3">
+
+<p class="bg-purple-50 p-2 rounded">
+<b>Father Name:</b>
+{{ student.father }}
+</p>
+
+<p class="bg-purple-50 p-2 rounded">
+<b>Mother Name:</b>
+{{ student.mother }}
+</p>
+
+<p class="bg-purple-50 p-2 rounded">
+<b>Session:</b>
+{{ student.session }}
+</p>
+
+<p class="bg-purple-50 p-2 rounded">
+<b>Exam:</b>
+{{ student.exam }}
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Marks Table -->
+
+<div class="px-6">
+
+<table class="w-full border-collapse overflow-hidden rounded-lg">
+
+<thead>
+
+<tr class="bg-gradient-to-r from-indigo-700 to-blue-500 text-white">
+
+<th class="p-3 border">Subject</th>
+<th class="p-3 border">Full Marks</th>
+<th class="p-3 border">Obtained</th>
+<th class="p-3 border">Grade</th>
+<th class="p-3 border">GPA</th>
+
+</tr>
+
+</thead>
+
+<tbody class="text-center">
+
+{% for subject in subjects %}
+
+<tr class="hover:bg-gray-100">
+
+<td class="border p-2">
+{{ subject.name }}
+</td>
+
+<td class="border">
+{{ subject.full_marks }}
+</td>
+
+<td class="border">
+{{ subject.obtained }}
+</td>
+
+<td class="border">
+{{ subject.grade }}
+</td>
+
+<td class="border">
+{{ subject.gpa }}
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+<tfoot>
+
+<tr class="bg-blue-900 text-white font-bold">
+
+<td class="border p-3">
+
+TOTAL
+
+</td>
+
+<td class="border">
+
+{{ total_full_marks }}
+
+</td>
+
+<td class="border">
+
+{{ total_obtained }}
+
+</td>
+
+<td class="border">
+
+{{ final_grade }}
+
+</td>
+
+<td class="border">
+
+{{ final_gpa }}
+
+</td>
+
+</tr>
+
+</tfoot>
+
+</table>
+
+</div>
+
+<!-- Summary -->
+
+<div class="grid grid-cols-4 gap-5 p-6">
+
+<div class="bg-green-100 rounded-lg p-4 shadow">
+
+<b>Result:</b><br>
+
+{{ result }}
+
+</div>
+
+<div class="bg-yellow-100 rounded-lg p-4 shadow">
+
+<b>GPA:</b><br>
+
+{{ final_gpa }}
+
+</div>
+
+<div class="bg-pink-100 rounded-lg p-4 shadow">
+
+<b>Position:</b><br>
+
+{{ position }}
+
+</div>
+
+<div class="bg-blue-100 rounded-lg p-4 shadow">
+
+<b>Attendance:</b><br>
+
+{{ attendance }}
+
+</div>
+
+</div>
+
+<!-- Remarks -->
+
+<div class="px-6">
+
+<div class="bg-gray-100 rounded-lg p-4">
+
+<h3 class="font-bold text-lg text-blue-900">
+
+Teacher Remarks:
+
+</h3>
+
+<p class="mt-6">
+
+{{ remarks }}
+
+</p>
+
+</div>
+
+</div>
+
+<!-- Signature -->
+
+<div class="flex justify-between p-10 mt-8">
+
+<div class="text-center">
+
+<div class="border-t-2 border-black w-40"></div>
+
+<p class="mt-2 font-bold">
+
+Class Teacher
+
+</p>
+
+</div>
+
+
+<div class="text-center">
+
+<div class="border-t-2 border-black w-40"></div>
+
+<p class="mt-2 font-bold">
+
+Parent Signature
+
+</p>
+
+</div>
+
+
+<div class="text-center">
+
+<div class="border-t-2 border-black w-40"></div>
+
+<p class="mt-2 font-bold">
+
+Principal
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="text-center mt-8">
+
+<a
+href="{% url 'download_pdf' %}"
+class="bg-green-600 text-white px-6 py-3 rounded-lg">
+
+Download PDF
+
+</a>
+
+</div>
+
+</body>
+</html>

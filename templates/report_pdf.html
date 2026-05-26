@@ -1,0 +1,539 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AR RAHAMAN ISLAMIC PUBLIC SCHOOL | Report Card</title>
+<style>
+  /* ===== GLOBAL & RESET ===== */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  /* A4 page settings – applied for screen preview + print */
+  @page {
+    size: A4;
+    margin: 1.2cm;
+  }
+
+  body {
+    background: linear-gradient(145deg, #e0e7ff 0%, #c7d2fe 100%);
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    padding: 1.5rem;
+    color: #1e293b;
+  }
+
+  /* main card – now fills available width, no fixed max-width */
+  .report-card {
+    width: 100%;
+    max-width: 100%;
+    background: white;
+    border-radius: 2rem;
+    box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+    transition: all 0.2s ease;
+    margin: 0 auto;
+  }
+
+  /* ===== HEADER ===== */
+  .header {
+    background: linear-gradient(135deg, #0f2b5e, #1e3a8a, #2563eb);
+    padding: 1.2rem 1.5rem;
+    color: white;
+  }
+
+  .header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    width: 85px;
+    height: 85px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+  }
+
+  .logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .school-title {
+    text-align: center;
+    flex: 1;
+  }
+
+  .school-title h1 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #fff8e7, #ffe6b3);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  .estd {
+    font-size: 0.8rem;
+    opacity: 0.9;
+    margin-top: 0.2rem;
+  }
+
+  .exam-badge {
+    display: inline-block;
+    background: #ef4444;
+    padding: 0.3rem 1.2rem;
+    border-radius: 40px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .photo-box {
+    width: 90px;
+    height: 100px;
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 215, 0, 0.6);
+  }
+
+  .photo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .photo-placeholder {
+    color: #64748b;
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  /* ===== STUDENT INFO GRID ===== */
+  .info-section {
+  padding: 1.2rem 1.5rem 0.5rem 1.5rem;
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.section-head .accent {
+  width: 6px;
+  height: 28px;
+  background: #2563eb;
+  border-radius: 6px;
+}
+
+.section-head h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0f2b5e;
+}
+
+/* Two‑row layout for info cards */
+.info-grid {
+  display: grid;
+  grid-template-rows: repeat(2, auto);
+  grid-auto-flow: column;
+  gap: 0.8rem;
+}
+
+.info-card {
+  background: #f8fafc;
+  border-radius: 1rem;
+  padding: 0.7rem 1rem;
+  border: 1px solid #e2e8f0;
+}
+
+.info-card .label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.info-card .value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f2b5e;
+  margin-top: 0.2rem;
+}
+
+  /* ===== MARKS TABLE ===== */
+  .marks-section {
+    padding: 0 1.5rem;
+  }
+
+  .marks-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    margin-top: 0.5rem;
+  }
+
+  .marks-table th {
+    background: linear-gradient(98deg, #1e3a8a, #2563eb);
+    color: white;
+    padding: 0.7rem 0.3rem;
+    font-weight: 700;
+    font-size: 0.8rem;
+  }
+
+  .marks-table td {
+    border-bottom: 1px solid #eef2ff;
+    padding: 0.6rem 0.3rem;
+    text-align: center;
+    font-size: 0.8rem;
+  }
+
+  .marks-table tr:hover td {
+    background: #fefce8;
+  }
+
+  .total-row {
+    background: #eef2ff;
+    font-weight: 800;
+    border-top: 2px solid #bfdbfe;
+  }
+
+  .total-row td {
+    padding: 0.8rem 0.3rem;
+    font-weight: 800;
+  }
+
+  .obtained-highlight {
+    background: #fff3bf;
+    font-weight: 700;
+  }
+
+  /* ===== SUMMARY CARDS ===== */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    padding: 1.2rem 1.5rem;
+  }
+
+  .summary-card {
+    border-radius: 1.2rem;
+    padding: 0.8rem 0.5rem;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  }
+
+  .summary-card .title {
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .summary-card .big-number {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-top: 0.3rem;
+  }
+
+  .card-result { background: linear-gradient(125deg, #dcfce7, #bbf7d0); color: #166534; }
+  .card-gpa { background: linear-gradient(125deg, #fef9c3, #fde047); color: #854d0e; }
+  .card-position { background: linear-gradient(125deg, #ffe4e6, #fecdd3); color: #9f1239; }
+  .card-attendance { background: linear-gradient(125deg, #dbeafe, #bfdbfe); color: #1e3a8a; }
+
+  /* ===== REMARKS ===== */
+  .remarks-box {
+    margin: 0.5rem 1.5rem 1rem 1.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 1.2rem;
+    overflow: hidden;
+  }
+
+  .remarks-header {
+    background: #f1f5f9;
+    padding: 0.6rem 1.2rem;
+    font-weight: 800;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 0.9rem;
+  }
+
+  .remarks-content {
+    padding: 1rem 1.5rem;
+    background: #fffdf7;
+    font-style: italic;
+    border-left: 5px solid #f97316;
+    font-size: 0.85rem;
+  }
+
+  /* ===== SIGNATURES ===== */
+  .signatures {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 1.5rem 1.5rem 1.5rem;
+    text-align: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .sign-item {
+    flex: 1;
+    min-width: 110px;
+  }
+
+  .sign-line {
+    border-top: 2px dashed #94a3b8;
+    width: 70%;
+    margin: 0 auto 0.5rem auto;
+  }
+
+  .sign-label {
+    font-weight: 700;
+    color: #1e293b;
+    font-size: 0.8rem;
+  }
+
+  .sign-sub {
+    font-size: 0.65rem;
+    color: #5b6e8c;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    background: linear-gradient(90deg, #0f2b5e, #1e3a8a, #2563eb);
+    text-align: center;
+    padding: 0.8rem;
+    color: #e0e7ff;
+    font-size: 0.7rem;
+    margin-top: 0.5rem;
+  }
+
+  /* ===== DOWNLOAD BUTTON ===== */
+  .download-wrapper {
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+  .btn-download {
+    background: #16a34a;
+    color: white;
+    padding: 0.6rem 1.5rem;
+    border-radius: 2rem;
+    text-decoration: none;
+    font-weight: 700;
+    display: inline-block;
+    transition: 0.2s;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    font-size: 0.9rem;
+  }
+  .btn-download:hover {
+    background: #15803d;
+    transform: scale(1.02);
+  }
+
+  /* ===== PRINT / PDF OPTIMISATION (A4) ===== */
+  @media print {
+    body {
+      background: white;
+      padding: 0;
+      margin: 0;
+    }
+    .report-card {
+      box-shadow: none;
+      border-radius: 0;
+      max-width: 100%;
+      margin: 0;
+    }
+    .download-wrapper {
+      display: none;
+    }
+    .header {
+      background: #1e3a8a; /* solid colour for print */
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .summary-card, .info-card, .marks-table tr {
+      break-inside: avoid;
+    }
+    .marks-table th, .marks-table td {
+      padding: 0.4rem 0.2rem;
+      font-size: 0.75rem;
+    }
+    .summary-card .big-number {
+      font-size: 1.3rem;
+    }
+    .school-title h1 {
+      font-size: 1.2rem;
+      color: white;
+      background: none;
+      -webkit-background-clip: unset;
+      background-clip: unset;
+    }
+    .exam-badge {
+      background: #ef4444;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="report-card">
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-flex">
+      <div class="logo">
+        <img src="{% static 'src/AR.jpeg' %}" alt="School Logo">
+      </div>
+      <div class="school-title">
+        <h1>AR RAHAMAN ISLAMIC PUBLIC SCHOOL</h1>
+        <div class="estd">ESTD - 2021 | CBSE AFFILIATED</div>
+        <div class="exam-badge">
+          📘 {{ student.exam }} REPORT CARD
+        </div>
+      </div>
+      <div class="photo-box">
+        {% if student.photo %}
+          <img src="{{ student.photo.url }}" alt="Student Photo">
+        {% else %}
+          <div class="photo-placeholder">📸 STUDENT<br>PHOTO</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- STUDENT INFORMATION -->
+  <div class="info-section">
+    <div class="section-head">
+      <div class="accent"></div>
+      <h2>📋 STUDENT DIGITAL PROFILE</h2>
+    </div>
+    <div class="info-grid">
+      <div class="info-card"><div class="label">🪪 Full Name</div><div class="value">{{ student.name }}</div></div>
+      <div class="info-card"><div class="label">👨‍👦 Father's Name</div><div class="value">{{ student.father }}</div></div>
+      <div class="info-card"><div class="label">👩‍👧 Mother's Name</div><div class="value">{{ student.mother }}</div></div>
+      <div class="info-card"><div class="label">🎯 Roll Number</div><div class="value">{{ student.roll }}</div></div>
+      <div class="info-card"><div class="label">🏫 Class & Section</div><div class="value">{{ student.class_name }} - {{ student.section }}</div></div>
+      <div class="info-card"><div class="label">📅 Academic Session</div><div class="value">{{ student.session }}</div></div>
+      <div class="info-card"><div class="label">📖 Exam Type</div><div class="value">{{ student.exam }}</div></div>
+    </div>
+  </div>
+
+  <!-- MARKS TABLE -->
+  <div class="marks-section">
+    <div class="section-head" style="margin-top: 0.5rem;">
+      <div class="accent" style="background: #f97316;"></div>
+      <h2>📊 ACADEMIC PERFORMANCE</h2>
+    </div>
+    <table class="marks-table">
+      <thead>
+        <tr><th> SUBJECT</th><th> FULL MARKS</th><th>✨ OBTAINED</th><th>⭐ GRADE</th><th> GPA</th></tr>
+      </thead>
+      <tbody>
+        {% for subject in subjects %}
+        <tr>
+          <td><strong>{{ subject.name }}</strong></td>
+          <td>{{ subject.full_marks }}</td>
+          <td class="obtained-highlight">{{ subject.obtained }}</td>
+          <td>{{ subject.grade }}</td>
+          <td>{{ subject.gpa }}</td>
+        </tr>
+        {% endfor %}
+        <tr class="total-row">
+          <td><strong>📌 TOTAL / AGGREGATE</strong></td>
+          <td><strong>{{ total_full_marks }}</strong></td>
+          <td><strong>{{ total_obtained }}</strong></td>
+          <td><strong>{{ final_grade }}</strong></td>
+          <td><strong>{{ final_gpa }}</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SUMMARY CARDS -->
+  <div class="summary-grid">
+    <div class="summary-card card-result">
+      <div class="title">🏆 RESULT STATUS</div>
+      <div class="big-number">{{ result }}</div>
+    </div>
+    <div class="summary-card card-gpa">
+      <div class="title">🎯 CUMULATIVE GPA</div>
+      <div class="big-number">{{ final_gpa }}</div>
+    </div>
+    <div class="summary-card card-position">
+      <div class="title">🥇 CLASS POSITION</div>
+      <div class="big-number">#{{ position }}</div>
+    </div>
+    <div class="summary-card card-attendance">
+      <div class="title">📆 ATTENDANCE </div>
+      <div class="big-number">{{ attendance }}%</div>
+    </div>
+  </div>
+
+  <!-- REMARKS -->
+  <div class="remarks-box">
+    <div class="remarks-header">📝 TEACHER'S INSIGHT & REMARKS</div>
+    <div class="remarks-content">
+      {{ remarks }}
+      <div style="margin-top: 8px; font-size: 0.7rem; font-style: normal;">🧑‍🏫 Class Teacher · Verified</div>
+    </div>
+  </div>
+
+  <!-- SIGNATURES -->
+  <div class="signatures">
+    <div class="sign-item">
+      <div class="sign-line"></div>
+      <div class="sign-label">✍️ Class Teacher</div>
+      <div class="sign-sub">(Signature & Stamp)</div>
+    </div>
+    <div class="sign-item">
+      <div class="sign-line"></div>
+      <div class="sign-label">🖊️ Parent / Guardian</div>
+      <div class="sign-sub">(Acknowledged)</div>
+    </div>
+    <div class="sign-item">
+      <div class="sign-line" style="border-top: 2px solid #2563eb;"></div>
+      <div class="sign-label" style="color: #2563eb;">🏅 Principal</div>
+      <div class="sign-sub">(Authorised Signatory)</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  {% comment %} <div class="footer">
+    🌟 AR RAHAMAN ISLAMIC PUBLIC SCHOOL 🌟 — Inspiring Minds, Shaping Futures © 2026
+  </div> {% endcomment %}
+</div>
+
+<!-- DOWNLOAD PDF BUTTON -->
+<div class="download-wrapper">
+  <a href="{% url 'download_pdf' %}" class="btn-download">
+    ⬇️ Download Report Card (PDF)
+  </a>
+</div>
+
+</body>
+</html>

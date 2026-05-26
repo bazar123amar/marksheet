@@ -1,0 +1,19 @@
+<h1>Student List</h1>
+
+<table border="1">
+
+{% for student in students %}
+
+<tr>
+
+{% for key,value in student.items %}
+
+<td>{{ value }}</td>
+
+{% endfor %}
+
+</tr>
+
+{% endfor %}
+
+</table>
